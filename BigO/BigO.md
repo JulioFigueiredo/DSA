@@ -2,6 +2,10 @@
 
 A notação Big O é uma ferramenta matemática usada na computação para medir a eficiência e a complexidade assintótica de um algoritmo. Ela descreve o pior cenário de tempo de execução ou uso de espaço à medida que a entrada de dados cresce, permitindo comparar o desempenho de diferentes soluções. 
 
+Bom código -> legível e escalável e (não usar muita memória)
+
+https://www.bigocheatsheet.com/
+
 ## Regras:
 
 ### Regra 1: Pior caso possível 
@@ -46,6 +50,20 @@ Focamos apenas no termo que cresce mais rápido. Se um algoritmo tem uma parte q
 
 Exemplo: Em $O(n + n^2)$, o $n$ se torna irrelevante para valores massivos de dados. **O $n^2$ é quem "manda" no tempo de execução**.
 
+```
+def print_items_and_pairs(items):
+    # Parte 1: Percorre a lista uma vez -> O(n)
+    print("Listando os itens:")
+    for item in items:
+        print(item)
+
+    # Parte 2: Loops aninhados na mesma lista -> O(n^2)
+    print("Listando os pares:")
+    for i in items:
+        for j in items:
+            print(f"Par: {i}, {j}")
+```
+
 # O(n)
 ![alt text](img/image.png)
 
@@ -67,3 +85,33 @@ O(1) significa que o tempo de execução não cresce com o tamanho da entrada. I
 ![alt text](img/image-1.png)
 
 Não é linear como O(n), é **constante**
+
+# O(n!)
+
+O mais lento e caro de todos. Acontece quando o algoritmo precisa calcular todas as permutações (ordens) possíveis de uma coleção de dados. O número de operações cresce de forma absurdamente rápida a cada novo item adicionado
+
+Exemplo de código (geração de anagramas):
+```
+def get_permutations(string):
+    if len(string) <= 1:
+        return [string]
+    
+    permutations = []
+    # Para cada letra, gera as permutações do resto da palavra
+    for i, char in enumerate(string):
+        remaining = string[:i] + string[i+1:]
+        for p in get_permutations(remaining):
+            permutations.append(char + p)
+            
+    return permutations
+
+# "ABC" vai gerar 6 combinações (3!)
+# "ABCD" vai gerar 24 combinações (4!)
+```
+
+# O que causa complexidade de espaço:
+
+- Variáveis
+- Estruturas de dados
+- Chamadas de funções
+- Alocações
